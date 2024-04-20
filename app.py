@@ -1,15 +1,10 @@
 from flask import Flask
-from flask_pymongo import PyMongo
-from dotenv import load_dotenv
-import os
+from utils.database import databaseConnection
+from routes.order_routes import order_bp
 
-load_dotenv()
 
 app=Flask(__name__)
 
-app.config['MONGO_URI']=os.getenv("MONGO_URI")
-mongo=PyMongo(app)
+databaseConnection()
 
-
-if __name__=="__main__":
-    app.run(debug=True)
+app.register_blueprint(order_bp)
