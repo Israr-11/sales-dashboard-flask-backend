@@ -4,25 +4,33 @@ from typing import List, NamedTuple
 class Order(NamedTuple):
     price: float
     currency: str
-    product_categories: List[str]
-    sales_type: str
+    productCategories: List[str]
+    salesType: str
+    phoneNumber: str
     quantity: int
-    product_name: str
-    city: str
-    country: str
-    phone_number: str
-    entry_time: datetime
+    orderName: str
+    customerCity: str
+    customerCountry: str
+    cityLatitude: float
+    cityLongitude: float
+    countryLatitude: float
+    countryLongitude: float
+    entryTime: datetime
 
     def to_dict(self) -> dict:
         return {
             'price': self.price,
             'currency': self.currency,
-            'product_categories': self.product_categories,
-            'sales_type': self.sales_type,
+            'productCategories': self.productCategories,
+            'salesType': self.salesType,
+            'phoneNumber': self.phoneNumber,
             'quantity': self.quantity,
-            'product_name': self.product_name,
-            'city': self.city,
-            'country': self.country,
-            'phone_number': self.phone_number,
-            'entry_time': self.entry_time.isoformat(),  # Use ISO 8601 format for datetime
+            'orderName': self.orderName,
+            'customerCity': self.customerCity,
+            'customerCountry': self.customerCountry,
+            'cityLatitude': self.cityLatitude,
+            'cityLongitude': self.cityLongitude,
+            'countryLatitude': self.countryLatitude,
+            'countryLongitude': self.countryLongitude,
+            'entryTime': self.entryTime.isoformat(), 
         }

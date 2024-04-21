@@ -9,5 +9,5 @@ def placeOrderRoute():
         orderId = placeOrder(request.json)
         return orderId
     except Exception as e:
-        print(f"An error occurred while placing the order: {e}")
+        print(f"An error occurred in routes while placing the order: {e}")
         return jsonify({"error": "Failed to place order"}), 500

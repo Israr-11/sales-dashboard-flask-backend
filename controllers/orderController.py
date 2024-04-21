@@ -1,17 +1,21 @@
-import json
 from flask import jsonify
 from model.orders import Order
 from datetime import datetime, timezone
 from utils.database import dBConnection
+from utils.coordinates import getCoordinates
 
 client, db, collection = dBConnection()
 
 def placeOrder(data):
     try:
-        newOrder = Order(data['price'], data['currency'], data['product_categories'],
-                         data['sales_type'], data['quantity'], data['product_name'],
-                         data['city'], data['country'], data['phone_number'],
-                         datetime.now(timezone.utc))
+        cityLatitude, cityLongitude, countryLatitude, countryLongitude = getCoordinates(data['customerCity'], data['customerCountry'])
+        newOrder = Order(
+            data['price'], data['currency'], data['productCategories'],
+            data['salesType'], data['phoneNumber'], data['quantity'], data['orderName'],
+            data['customerCity'], data['customerCountry'],
+            cityLatitude, cityLongitude, countryLatitude, countryLongitude,
+            datetime.now(timezone.utc)
+        )
 
         print("The newOrder is as:", newOrder.to_dict())
 
@@ -19,9 +23,9 @@ def placeOrder(data):
 
         print("The order ID is as:", order_Id)
         orderId = str(order_Id)
-        jsonData = jsonify({ "message":"Order placed Sucessfully", "status":'SUCCESSFUL', "order_id":orderId})
+        jsonData = jsonify({ "message": "Order placed Successfully", "order_id": orderId, "status": 'SUCCESSFUL'})
         return jsonData
 
     except Exception as e:
-        print(f"An error occurred while placing the order: {e}")
+        print(f"An error occurred in controller while placing the order: {e}")
         return jsonify({"error": "Failed to place order"}), 500  

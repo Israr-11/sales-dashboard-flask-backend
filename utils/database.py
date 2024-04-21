@@ -18,8 +18,8 @@ def dBConnection():
     try:
         client.admin.command('ping')
         print("Pinged your deployment. You successfully connected to MongoDB!")
-        print("Connected to database:", db_name)
-        print("Collection names:", db.list_collection_names())
+        #print("Connected to database:", db_name)
+        #print("Collection names:", db.list_collection_names())
     except Exception as e:
         print("Failed to connect to MongoDB:", e)
 
