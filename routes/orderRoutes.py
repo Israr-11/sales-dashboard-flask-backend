@@ -4,7 +4,7 @@ from controllers.orderController import placeOrder
 order_bp = Blueprint('order_bp', __name__)
 
 @order_bp.route('/place_order', methods=['POST'])
-def place_order():
+def placeOrderRoute():
     try:
         orderId = placeOrder(request.json)
         return orderId

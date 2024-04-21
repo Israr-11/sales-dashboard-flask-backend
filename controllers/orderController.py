@@ -5,7 +5,6 @@ from datetime import datetime, timezone
 from utils.database import dBConnection
 
 client, db, collection = dBConnection()
-print("The collection in controller:", collection)
 
 def placeOrder(data):
     try:
@@ -20,7 +19,7 @@ def placeOrder(data):
 
         print("The order ID is as:", order_Id)
         orderId = str(order_Id)
-        jsonData = jsonify({ "status":'SUCCESSFUL', "order_id":orderId, "message":"Order placed Sucessfully"})
+        jsonData = jsonify({ "message":"Order placed Sucessfully", "status":'SUCCESSFUL', "order_id":orderId})
         return jsonData
 
     except Exception as e:
