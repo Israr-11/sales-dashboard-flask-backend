@@ -1,10 +1,11 @@
-from flask import Flask,jsonify
+from flask import jsonify
 from model.orders import Order
 from datetime import datetime, timezone
-from utils.database import databaseConnection
+from utils.database import dBConnection
 
-db, collection_name, client=databaseConnection()
-print("The collection is as in controller:", collection_name)
+# Get MongoDB objects from the database module
+client, db, collection = dBConnection()
+print("The collection in controller:", collection)
 
 def placeOrder(data):
     try:
@@ -17,14 +18,14 @@ def placeOrder(data):
         # Print information for debugging
         print("The newOrder is as:", newOrder.to_dict())
 
-        # Insert order into database
-        order_id = collection_name.insert_one(newOrder.to_dict()).inserted_id
+        # Insert order into collection
+        order_Id = collection.insert_one(newOrder.to_dict()).inserted_id
 
         # Print confirmation and return order ID
-        print("The order ID is as:", order_id)
-        return jsonify(str(order_id))
+        print("The order ID is as:", order_Id)
+        orderId=str(order_Id)
+        return jsonify({"status":"SUCCESSFUL", "orderId":orderId})
 
     except Exception as e:
-        # Handle any exception that occurs during order creation or insertion
         print(f"An error occurred while placing the order: {e}")
-        return jsonify({"error": "Failed to place order"}), 500  # Internal Server Error
+        return jsonify({"error": "Failed to place order"}), 500  

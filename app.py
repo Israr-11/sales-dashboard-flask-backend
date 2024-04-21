@@ -1,10 +1,10 @@
 from flask import Flask
-from utils.database import databaseConnection
-from routes.order_routes import order_bp
+from utils.database import dBConnection
+from routes.orderRoutes import order_bp
 
 
 app=Flask(__name__)
 
-databaseConnection()
+dBConnection()
 
 app.register_blueprint(order_bp)
