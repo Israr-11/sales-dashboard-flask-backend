@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import List, NamedTuple
 
 class Order(NamedTuple):
+    customerName: str
+    newCustomer:bool
     price: float
     currency: str
     productCategories: List[str]
@@ -19,6 +21,8 @@ class Order(NamedTuple):
 
     def to_dict(self) -> dict:
         return {
+            'customerName': self.customerName,
+            'newCustomer':self.newCustomer,
             'price': self.price,
             'currency': self.currency,
             'productCategories': self.productCategories,

@@ -2,15 +2,20 @@ from flask import jsonify
 from model.orders import Order
 from datetime import datetime, timezone
 from utils.database import dBConnection
-from utils.coordinates import getCoordinates
+from services.coordinates import getCoordinates
+from services.newCustomerCheck import newCustomerCheck
 
 client, db, collection = dBConnection()
 
 def placeOrder(data):
     try:
+        existingCustomer=newCustomerCheck(data["customerName"], data["phoneNumber"])
+        newCustomer=not existingCustomer
+
         cityLatitude, cityLongitude, countryLatitude, countryLongitude = getCoordinates(data['customerCity'], data['customerCountry'])
+        
         newOrder = Order(
-            data['price'], data['currency'], data['productCategories'],
+            data['customerName'], newCustomer, data['price'], data['currency'], data['productCategories'],
             data['salesType'], data['phoneNumber'], data['quantity'], data['orderName'],
             data['customerCity'], data['customerCountry'],
             cityLatitude, cityLongitude, countryLatitude, countryLongitude,
